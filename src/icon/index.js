@@ -17,7 +17,7 @@ const IconStyle = styled.svg`
   margin-right: ${props => props.on === 'button' ? '5px' : ''};
 `;
 
-const Icon = ({ name = 'default', on, fill = '#FFF', size = 'big' }) => {
+const Icon = ({ on, name = 'default', fill = '#FFF', size = 'big' }) => {
   return (
     <IconStyle viewBox={`0 0 ${size === 'small' ? 358 : 512} 512`} on={on}>
       <path fill={fill} d={svgPath[name]}></path>

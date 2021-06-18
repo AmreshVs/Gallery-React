@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const Card = styled.div`
   padding: 20px;
@@ -7,15 +7,11 @@ const Card = styled.div`
   background: #FFF;
   max-width: 900px;
 
-  ${props => {
-    if (props.size === 'small') {
-      return css`
-          & {
-            max-width: 440px;
-          }
-        `;
-    }
-  }} 
+  ${props => props.size === 'small' && `
+   & {
+    max-width: 440px;
+  }
+  `}
 `;
 
 export default Card;

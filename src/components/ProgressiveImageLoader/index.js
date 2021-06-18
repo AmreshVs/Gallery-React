@@ -31,7 +31,7 @@ const ImageLoaderStyle = styled.div`
   }
 `;
 
-const ProgresiveImageLoader = ({ url, alt, styleName, onClick, ...rest }) => {
+const ProgresiveImageLoader = ({ url, alt, styleName, onClick }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const source = process.env.REACT_APP_IMAGE_URL + url;
   const thumbnail = process.env.REACT_APP_IMAGE_URL + 'thumbnail_' + url;;

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import theme from '../../theme';
+
+import theme from 'theme';
 
 const LoaderStyle = styled.div`
   display: inline-flex;
@@ -28,8 +29,7 @@ const Loader = ({ children, loading, size }) => {
 
   if (loading) {
     return (
-      <LoaderStyle size={size}>
-      </LoaderStyle>
+      <LoaderStyle size={size} />
     )
   }
 

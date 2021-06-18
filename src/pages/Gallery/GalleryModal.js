@@ -29,16 +29,21 @@ const GalleryModal = ({ state, toggleClose, getData }) => {
 
   const handleUpdate = async () => {
     try {
-      const formData = new FormData();
-      formData.set('id', state.currentImage?.id);
-      formData.set('imageName', newImageName);
+      if (newImageName.length > 6) {
+        const formData = new FormData();
+        formData.set('id', state.currentImage?.id);
+        formData.set('imageName', newImageName);
 
-      setSaveLoader(true);
+        setSaveLoader(true);
 
-      const updateData = await UseAxios(GALLERY_UPDATE, formData);
+        const updateData = await UseAxios(GALLERY_UPDATE, formData);
 
-      setNewImageName(updateData?.data?.imageName);
-      toggleEdit();
+        setNewImageName(updateData?.data?.imageName);
+        toggleEdit();
+      }
+      else {
+        snackBarError('Image name cannot be empty or less than 6 characters');
+      }
     }
     catch (error) {
       snackBarError('Error Occured');
@@ -78,7 +83,7 @@ const GalleryModal = ({ state, toggleClose, getData }) => {
           {!edit ?
             <Fragment>
               <div>
-                <h3>{newImageName}</h3>
+                <h3 className="gallery__imageName">{newImageName}</h3>
                 <div className="gallery__attributes">
                   <div className="attr">Type</div>
                   <div className="value">Image</div>
@@ -120,7 +125,10 @@ const GalleryModal = ({ state, toggleClose, getData }) => {
                   <Icon name="tick" on="button" />
                   Save
                 </Button>
-                <Button onClick={() => toggleEdit()} primary>
+                <Button onClick={() => {
+                  toggleEdit();
+                  setNewImageName(state.currentImage.imageName)
+                }} primary>
                   <Icon name="close" on="button" />
                   Cancel
                 </Button>

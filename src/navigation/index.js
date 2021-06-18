@@ -1,34 +1,13 @@
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import Main from 'pages/Main';
 import Login from 'pages/Login';
 import Signup from 'pages/Signup';
 import Gallery from 'pages/Gallery';
 import NotFound from "pages/NotFound";
-import { validateUser } from 'pages/utils';
+import { PrivateRoute } from "./PrivateRoute";
 
 const Navigation = () => {
-
-  const PrivateRoute = ({ children, ...rest }) => {
-    return (
-      <Route
-        {...rest}
-        render={({ location }) =>
-          validateUser() ? (
-            children
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: location }
-              }}
-            />
-          )
-        }
-      />
-    );
-  }
-
   return (
     <Switch>
       <Route exact path="/">

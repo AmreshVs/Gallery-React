@@ -1,3 +1,33 @@
+html,
+body {
+  /* 62.5% of 16px = 10px */
+  font-size: 62.5%;
+  line-height: 1.5;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1.7rem;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+ul {
+  list-style: none;
+}
+
 .App {
   text-align: center;
 }
@@ -38,6 +68,11 @@
 /* Common */
 .text-muted {
   color: #8a8a8a;
+}
+
+a {
+  text-decoration: auto;
+  color: inherit;
 }
 
 /* Login */
@@ -130,7 +165,8 @@
 }
 
 .gallery__card {
-  display: flex;
+  display: grid;
+  grid-template: 1fr / 1fr 300px;
   position: relative;
   bottom: 100%;
   transition: all 0.5s;
@@ -138,7 +174,7 @@
 }
 
 .gallery__modal--show.gallery__modal {
-  z-index: 999999;
+  z-index: 9999;
 }
 
 .gallery__modal--show .gallery__card {
@@ -165,19 +201,17 @@
 }
 
 .gallery__details {
-  min-width: auto;
   text-align: left;
   padding-left: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 400px;
 }
 
 .gallery__attributes {
   display: inline-flex;
   width: 100%;
-  justify-content: start;
+  justify-content: flex-start;
   padding: 5px 0px;
 }
 
@@ -196,6 +230,12 @@
   max-width: 550px;
 }
 
+.gallery__imageName {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 @media screen and (max-width: 768px) {
   .gallery__container {
     grid-template: 1fr / repeat(2, 1fr);
@@ -210,13 +250,14 @@
   }
 
   .gallery__card {
-    flex-direction: column;
+    grid-template: auto / 85vw;
     margin: 20px;
   }
 
   .gallery__modal .gallery__image {
     max-width: 100%;
-    height: 400px;
+    height: auto;
+    max-height: 350px;
   }
 
   .gallery__action_buttons button:nth-of-type(1) {
@@ -267,7 +308,7 @@
   bottom: 10px;
   right: 15px;
   box-shadow: 0px 5px 15px #0009;
-  z-index: 99999;
+  z-index: 9;
 }
 
 .upload_icon__file {
@@ -278,4 +319,9 @@
   left: 0;
   opacity: 0;
   cursor: pointer;
+}
+
+/* Not Found */
+.not-found {
+  width: 400px;
 }

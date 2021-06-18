@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createRef, Fragment, useEffect, useState } from "react";
 import UseAxios from 'hooks/UseAxios';
 import { GALLERY, GALLERY_CREATE } from 'api';
-import { snackBarSuccess, snackBarError } from 'components/Snackbar';
+import { snackBarError } from 'components/Snackbar';
 
 import Card from "components/Card";
 import Button from 'components/Button';
@@ -9,7 +10,7 @@ import ProgresiveImageLoader from "components/ProgressiveImageLoader";
 import Loader from "components/Loader";
 import Icon from "icon";
 import GalleryModal from "./GalleryModal";
-import NoImage from '../../images/no-image.png';
+import NoImage from 'images/no-image.png';
 
 const Gallery = () => {
   const uploadRef = createRef(null);
@@ -23,7 +24,6 @@ const Gallery = () => {
   });
 
   const getData = async () => {
-    console.log('here');
     !state.loading && setState(s => ({ ...s, loading: true }));
     try {
       const gallery = await UseAxios(GALLERY);
@@ -97,7 +97,13 @@ const Gallery = () => {
           <div className="gallery__container">
             {state.data && state.data.map((image, index) => {
               let key = index + 1;
-              return <ProgresiveImageLoader key={'image' + key} onClick={() => handleModalShow(image)} styleName={`gallery__image ${key % 4 === 0 ? 'gallery__image--big2' : key % 7 === 0 ? 'gallery__image--big1' : ''}`} url={image.url} alt="splash" />
+              return <ProgresiveImageLoader
+                key={'image' + key}
+                onClick={() => handleModalShow(image)}
+                styleName={`gallery__image ${key % 4 === 0 ? 'gallery__image--big2' : key % 7 === 0 ? 'gallery__image--big1' : ''}`}
+                url={image.url}
+                alt={image?.imageName}
+              />
             })}
           </div>
           <GalleryModal {...{ state, toggleClose, getData }} />

@@ -1,10 +1,11 @@
 import { useHistory } from 'react-router-dom';
-import styled from "styled-components";
+import styled from 'styled-components';
 import axios from 'axios';
 
-import { validateUser } from "pages/utils";
+import { validateUser } from 'pages/utils';
+import { snackBarError } from 'components/Snackbar';
 
-import Logo from '../../images/logo.png';
+import Logo from 'images/logo.png';
 import Icon from 'icon';
 
 const TopNavStyles = styled.div`
@@ -22,11 +23,16 @@ const TopNav = () => {
   const history = useHistory();
 
   const handleLogout = () => {
-    let userData = localStorage.removeItem('userData');
+    try {
+      let userData = localStorage.removeItem('userData');
 
-    if (!userData) {
-      axios.defaults.headers.common.Authorization = '';
-      history.replace('/login');
+      if (!userData) {
+        axios.defaults.headers.common.Authorization = '';
+        history.replace('/login');
+      }
+    }
+    catch (error) {
+      snackBarError('Error Occured');
     }
   }
 

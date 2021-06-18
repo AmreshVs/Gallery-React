@@ -1,39 +1,15 @@
 import axios from 'axios';
-import UseAxios from 'hooks/UseAxios';
-import { SIGNUP } from 'api';
-import { snackBarError } from 'components/Snackbar';
 import { Formik } from 'formik';
 import { useHistory, Link } from 'react-router-dom';
 
-import Card from "components/Card";
+import { snackBarError } from 'components/Snackbar';
+import Card from 'components/Card';
 import Logo from 'images/logo.png';
 import Input from 'components/Input';
 import Button from 'components/Button';
-
-const validate = (values) => {
-  const errors = {};
-  if (!values.email) {
-    errors.email = 'Email required';
-  } else if (
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-  ) {
-    errors.email = 'Invalid email address';
-  }
-
-  if (!values.password) {
-    errors.password = 'Password required';
-  } else if (values.password.length < 6) {
-    errors.password = 'Must be greater than 6 characters';
-  }
-
-  if (!values.repassword) {
-    errors.repassword = 'Password required';
-  } else if (values.password != values.repassword) {
-    errors.repassword = 'Passwords does not match!';
-  }
-
-  return errors;
-}
+import UseAxios from 'hooks/UseAxios';
+import { SIGNUP } from 'api';
+import { validate } from './validate';
 
 const Signup = () => {
   const history = useHistory();

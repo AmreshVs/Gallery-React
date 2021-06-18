@@ -9,25 +9,7 @@ import Card from "components/Card";
 import Logo from 'images/logo.png';
 import Input from 'components/Input';
 import Button from 'components/Button';
-
-const validate = (values) => {
-  const errors = {};
-  if (!values.email) {
-    errors.email = 'Email required';
-  } else if (
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-  ) {
-    errors.email = 'Invalid email address';
-  }
-
-  if (!values.password) {
-    errors.password = 'Password required';
-  } else if (values.password.length < 6) {
-    errors.password = 'Must be greater than 6 characters';
-  }
-
-  return errors;
-}
+import { validate } from './validate';
 
 const Login = () => {
   const history = useHistory();
@@ -48,52 +30,47 @@ const Login = () => {
     }
   }
 
+  const Form = () => (
+    <Formik
+      initialValues={{ email: '', password: '' }}
+      validate={values => validate(values)}
+      onSubmit={(values, { setSubmitting }) => {
+        handleLogin(values);
+        setSubmitting(false);
+      }}
+    >
+      {({
+        values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting,
+      }) => (
+        <form onSubmit={handleSubmit}>
+          <Input
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.email} />
+          {errors.email && touched.email && <p className="error">{errors.email}</p>}
+          <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
+            required />
+          {errors.password && touched.password && <p className="error">{errors.password}</p>}
+          <Button type="submit" loading={isSubmitting} disabled={isSubmitting} primary>Login</Button>
+        </form>
+      )}
+    </Formik>
+  );
+
   return (
     <Card className="login" size="small">
       <img className="App-logo" src={Logo} alt="logo" />
       <h1 className="login__title">Login to your cloud gallery storage</h1>
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        validate={values => validate(values)}
-        onSubmit={(values, { setSubmitting }) => {
-          handleLogin(values)
-          setSubmitting(false);
-        }}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-          /* and other goodies */
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Input
-              type="email"
-              name="email"
-              placeholder="Email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-            />
-            {errors.email && touched.email && <p className="error">{errors.email}</p>}
-            <Input
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-              required
-            />
-            {errors.password && touched.password && <p className="error">{errors.password}</p>}
-            <Button type="submit" loading={isSubmitting} disabled={isSubmitting} primary>Login</Button>
-          </form>
-        )}
-      </Formik>
+      <Form />
       <p>Don't have an account? <Link to="/signup">Signup</Link></p>
     </Card>
   )
